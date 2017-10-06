@@ -17,7 +17,7 @@ import {
   MdToolbarModule,
   MdChipsModule,
   MdProgressBarModule,
-  MdExpansionModule
+  MdExpansionModule, MdSelectModule
 } from "@angular/material";
 
 @NgModule({
@@ -38,7 +38,8 @@ import {
     MdToolbarModule,
     MdChipsModule,
     MdProgressBarModule,
-    MdExpansionModule
+    MdExpansionModule,
+    MdSelectModule
   ],
   exports: [
     MdButtonModule,
@@ -57,7 +58,8 @@ import {
     MdToolbarModule,
     MdChipsModule,
     MdProgressBarModule,
-    MdExpansionModule
+    MdExpansionModule,
+    MdSelectModule
   ],
   declarations: [],
   providers: [],

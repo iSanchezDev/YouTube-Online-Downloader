@@ -9,6 +9,7 @@ import {HomeComponent} from "./home/home.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularMaterialModule} from "./tools/modules/angular-material.module";
 import {DownloaderComponent} from './home/downloader/downloader.component';
+import {DownloaderService} from "./services/downloader.service";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {DownloaderComponent} from './home/downloader/downloader.component';
     AngularMaterialModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [DownloaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
