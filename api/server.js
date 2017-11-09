@@ -24,19 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // API
 app.use('/api/', api);
 
-// Public Folder
-app.use(express.static(path.join(__dirname, '../client/dist/')));
-
 // Home
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/src/index.html'));
 });
-
-// Any
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/src/not-access.html'));
-});
-
 
 // -------------------------- HTTP SERVER --------------------------------- //
 

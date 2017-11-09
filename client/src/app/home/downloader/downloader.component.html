@@ -4,18 +4,19 @@
   <md-card-header class="dw-header">
     <div md-card-avatar class="youtube-downloader-image"></div>
     <md-card-title>Youtube Downloader</md-card-title>
-    <md-card-subtitle>Convert from URL to media files</md-card-subtitle>
+    <md-card-subtitle>From URL to Audio/Video files</md-card-subtitle>
   </md-card-header>
 
   <md-card-content class="details">
-    <section style="display: inline-flex; height: 100px;">
-      <img [src]="videoImg" class="image-video"/>
-
-      <ul class="song-details">
-        <li>{{title}}</li>
-        <li>{{titleError}}</li>
-      </ul>
+    <section class="centered">
+      <div class="margin-auto">
+        <img [src]="thumbnails" class="image-video"/>
+      </div>
     </section>
+  </md-card-content>
+
+  <md-card-content class=download-title>
+        <h4>{{downloadTitle}}</h4>
   </md-card-content>
 
   <md-card-content class="params">
@@ -24,20 +25,25 @@
         <input mdInput type="text" placeholder="URL" [(ngModel)]="url"/>
       </md-input-container>
     </section>
+
     <section>
       <md-select class="formats" placeholder="Format" [(ngModel)]="selectedFormat">
-          <md-option *ngFor="let format of formats" [value]="format.value">
-            {{format.viewValue}}
-          </md-option>
+        <md-option *ngFor="let format of selector.formats" [value]="format.value">
+          {{format.viewValue}}
+        </md-option>
       </md-select>
     </section>
   </md-card-content>
 
   <md-card-actions>
-    <section class="section-options">
-
-      <div style="margin: auto auto">
-        <button md-raised-button color="warn" (click)="ngDownload()" [disabled]="showLoadingBar">{{btnDownloadText}}</button>
+    <section class="centered">
+      <div class="margin-auto">
+        <button md-raised-button
+                color="warn"
+                (click)="ngDownload()"
+                [disabled]="showLoadingBar"
+        >{{btnDownloadText}}
+        </button>
       </div>
     </section>
   </md-card-actions>

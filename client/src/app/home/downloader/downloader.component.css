@@ -1,14 +1,13 @@
 .download-window {
-  padding: 50px;
-  min-height: 450px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2) !important;
+  height: 90vh;
+  padding: 40px 25px;
+  overflow-y: auto;
 }
-
 
 /* Details */
 
 .details {
-  height: 80px;
+  flex: 1 0;
 }
 
 .youtube-downloader-image {
@@ -17,42 +16,37 @@
 }
 
 .image-video {
-  height: 75px;
+  height: 18vh;
+  margin: 5px;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.14), 0 4px 11px 10px rgba(0,0,0,0.12), 0 3px 7px 0 rgba(0,0,0,0.2) !important
 }
 
-.song-details {
-  list-style: none;
+.dw-header {
+  margin: 10px 0;
+  height: 15vh;
 }
 
-.dw-header {
-  margin: 10px 0px;
-  height: 10vh;
+.download-title {
+  height: 5vh;
+  color: grey;
+  text-align: center;
 }
 
 /* Params */
 
 .params {
-  height: 25vh;
+  height: 20vh;
 }
 
 .url-input {
   width: 100%;
 }
 
-.url-refresh {
-  margin: auto auto;
+.formats {
+  width: 40%;
 }
 
-.url-error {
-  color: white;
-  margin: 20px auto;
-  padding: 0px 15px;
-  border-radius: 15px;
-  background-color: #f44336;
-}
-
-.section-options {
+.centered {
   width: 100%;
   display: inline-flex;
 }
@@ -62,34 +56,11 @@
 }
 
 .flex {
-  flex: 1 1 auto;
+  flex: 1 1;
 }
 
-.select-format-header {
-  margin-left: 5px;
-  font-size: large;
+.margin-auto {
+  margin: auto auto;
 }
 
 /* Actions */
-
-@media (min-width: 601px){
-
-.download-window {
-    height: auto;
-    min-height: 500px;
-  }
-}
-
-@media (min-width: 601px){
-  .download-window {
-    height: auto;
-    min-height: 500px;
-    overflow-y: auto;
-  }
-}
-
-@media (min-width: 450px) {
-  .download-window {
-    padding: 48px 40px 36px;
-  }
-}

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DownloaderService} from "../../services/downloader.service";
+import { DownloaderService } from '../../services/downloader.service';
+import { formatsModel } from '../../models/downloader-class.models'
 import { saveAs } from 'file-saver';
+
+const defaultThumbnails = '../../../assets/img/default_thumbnails.png';
 
 @Component({
   selector: 'app-downloader',
@@ -10,91 +13,96 @@ import { saveAs } from 'file-saver';
 
 export class DownloaderComponent implements OnInit {
 
-  url: string;
-  title: string;
-  titleError: string = "";
-  btnDownloadText: string = 'Download';
-  videoImg: string = "../../../assets/img/default_video.png";
+  // Booleans
   showLoadingBar: boolean = false;
 
-  formats = [
-    {value: 'audio-mp3', viewValue: 'Mp3'},
-    {value: 'audio-wav', viewValue: 'Wav'},
-    {value: 'video-m4a', viewValue: 'M4a'},
-    {value: 'video-mp4', viewValue: 'Mp4'},
-    {value: 'video-avi', viewValue: 'Avi'}
-  ];
+  // Strings
+  url: string;
+  downloadTitle: string = 'Type your url and download';
+  selectedFormat: string = 'audio-mp3';
+  btnDownloadText: string = 'Download';
+  thumbnails = defaultThumbnails;
 
-  selectedFormat: string;
+  // Models
+  selector = new formatsModel;
 
   constructor(private downloaderService: DownloaderService) {
+
   }
 
   ngOnInit() {
-
-    this.selectedFormat = 'audio-mp3'
   }
 
   ngDownload() {
 
-    if (this.btnDownloadText === 'Refresh') {
-      this.refreshContent();
-      return
-    }
+    if ((this.url !== undefined || this.url !== '') && this.btnDownloadText === 'Download') {
 
-    if (this.url !== undefined && this.url !== "") {
       this.showLoadingBar = true;
+      this.btnDownloadText = 'Downloading...';
+      let audioDownload = this.selectedFormat.indexOf('audio') != -1;
 
-      if (this.selectedFormat.indexOf('audio') != -1) {
-
-        // Audio
-        let format = this.selectedFormat.replace('audio-', '');
-
-        this.downloaderService.Download2Audio({url: this.url, format: format})
-          .subscribe((res: any) => {
-
-            res = res.json();
-            this.renderDownload(res)
-          }, (err) => {
-            console.log(err);
-            this.showLoadingBar = false;
-            this.titleError = "Error occured while trying to get this url";
-          }, () => {
-            this.showLoadingBar = false;
-          })
+      if (audioDownload) {
+        this.getAudioFromURL()
       } else {
-
-        // Video
-        let format = this.selectedFormat.replace('video-', '');
-
-        this.downloaderService.Download2Video({url: this.url, format: format})
-          .subscribe((res: any) => {
-
-            res = res.json();
-            this.renderDownload(res)
-          }, (err) => {
-            console.log(err);
-            this.showLoadingBar = false;
-            this.titleError = "Error occured while trying to get this url";
-          }, () => {
-            this.showLoadingBar = false;
-          })
+        this.getVideoFromURL()
       }
+    } else {
+
+      this.refreshContent()
     }
+  }
+
+  getFormat(format: string){
+
+    return format.replace(/(\w+)(-)/, '');
+  }
+
+  getAudioFromURL(){
+
+    let format = this.getFormat(this.selectedFormat);
+
+    this.downloaderService.Download2Audio({url: this.url, format: format})
+      .subscribe((res: any) => {
+
+        res = res.json();
+        this.renderDownloadObject(res)
+      }, (err) => {
+        console.log(err);
+        this.downloadTitle = 'Error while trying to get this url';
+      }, () => {
+        this.showLoadingBar = false;
+      })
+  }
+
+  getVideoFromURL(){
+
+    this.downloadTitle = '';
+    let format = this.getFormat(this.selectedFormat);
+
+    this.downloaderService.Download2Video({url: this.url, format: format})
+      .subscribe((res: any) => {
+
+        res = res.json();
+        this.renderDownloadObject(res)
+      }, (err) => {
+        console.log(err);
+        this.downloadTitle = 'Error while trying to get this url';
+      }, () => {
+        this.showLoadingBar = false;
+      })
+  }
+
+  renderDownloadObject(res){
+
+    this.btnDownloadText = 'Refresh';
+    this.downloadTitle = res.info.fulltitle;
+    this.thumbnails = res.info.thumbnail;
   }
 
   refreshContent(){
 
-    this.title = "";
-    this.titleError = "";
-    this.btnDownloadText = "Download";
-    this.videoImg = "../../../assets/img/default_video.png";
-  }
-
-  renderDownload(res){
-
-    this.title = res.info.fulltitle;
-    this.videoImg = res.info.thumbnail;
-    this.btnDownloadText = 'Refresh';
+    this.downloadTitle = 'Type your url and download';
+    this.btnDownloadText = 'Download';
+    this.thumbnails = defaultThumbnails;
   }
 }
